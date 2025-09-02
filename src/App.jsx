@@ -33,12 +33,16 @@ export default function WeddingPlannerApp() {
 
   const steps = ["Basic Info", "Guests", "Vendors", "Invitations", "AI Plan"];
 
+  // Get backend URL from .env or fallback to localhost
+  const backendUrl =
+    import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   // --- Call backend to generate AI plan ---
   const fetchAIPlan = async () => {
     try {
       setLoading(true);
       setAiPlan("");
-      const res = await axios.post("http://localhost:5000/api/plans", formData);
+      const res = await axios.post(`${backendUrl}/api/plans`, formData);
       setAiPlan(res.data.aiPlan);
     } catch (err) {
       console.error(err);
